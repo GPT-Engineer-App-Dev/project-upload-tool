@@ -22,7 +22,11 @@ const Index = () => {
     const arr = rows.map((row) => {
       const values = row.split(delimiter);
       const el = headers.reduce((object, header, index) => {
-        object[header] = values[index];
+        try {
+          object[header] = JSON.parse(values[index]);
+        } catch (e) {
+          object[header] = values[index];
+        }
         return object;
       }, {});
       return el;
@@ -69,7 +73,7 @@ const Index = () => {
                 )}
               </Td>
               <Td>
-                <Code whiteSpace="pre">{JSON.stringify(JSON.parse(row.tags), null, 2)}</Code>
+                <Code whiteSpace="pre">{JSON.stringify(row.tags, null, 2)}</Code>
               </Td>
             </Tr>
           ))}
